@@ -24,17 +24,15 @@ namespace WindowsFormsApplication1
         int poz5 = 0;
         int poz6 = 0;
 
-        string [] ydot = new string [] { "21000", "12000" };
-        int gnrint = 0;
-        string delinf = "21000";
+        static string [] ydot = new string [] { "21000", "12000" };
+        static int gnrint = 0;
+        string delinf = ydot[gnrint];
         
 
 
 
 
-        string[][] gentx = new string[][] { };
-        string[][] genot = new string[][] { };
-        string[][] genotnaot = new string[][] { };
+
 
 
         string[][] text = new string[][] {
@@ -69,6 +67,7 @@ namespace WindowsFormsApplication1
         }
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
+
             int si = listBox1.SelectedIndex;
 
 
@@ -79,19 +78,27 @@ namespace WindowsFormsApplication1
 
             if (delinf[si] == '1')
             {
-                textBox2.Clear();
-                f_otvetnaotvet();
+                textBox2.Text = "delinf = " + delinf + '\r' + '\n' + "si = " + si;
+
+                textBox1.Text = otvetnaotvet[poz4][si];
+                f_otvet();
             }
 
             else if (delinf[si] == '2')
             {
+                textBox2.Text = "delinf = " + delinf + '\r' + '\n' + "si = " + si;
+
+                delinf = delinf.Remove(si, si + 1);
                 listBox1.Items.RemoveAt(si);
-                listBox1.ClearSelected();
+                textBox1.Text = otvetnaotvet[poz4][si];
+                otvetnaotvet[poz4][si] = otvetnaotvet[poz4][si].Remove(si);
             }
 
             else if (delinf[si] == '0')
             {
-                textBox2.Text = textBox2.Text + '\r' + '\n' + "Остаемся!";
+                textBox2.Text = "delinf = " + delinf + '\r' + '\n' + "si = " + si;
+
+                textBox1.Text = otvetnaotvet[poz4][si];
             }
         }
 
@@ -109,15 +116,14 @@ namespace WindowsFormsApplication1
 
         private void f_text()
         {
-            gentx = text;
 
             listBox1.Items.Clear();
 
-            if (poz1 > gentx.Length-1)
+            if (poz1 > text.Length-1)
             {
                 poz1 = 0;
             }
-            textBox1.Text = gentx[poz1][poz2];
+            textBox1.Text = text[poz1][poz2];
             poz1 = poz1 + 1;
 
             f_otvet();
@@ -125,30 +131,25 @@ namespace WindowsFormsApplication1
 
         private void f_otvet()
         {
-            
-            textBox2.Text = delinf;
+            listBox1.Items.Clear();
 
 
-           genot = otvet;
-
-            if (poz3 > genot.Length-1)
+            if (poz3 > otvet.Length-1)
             {
                 poz3 = 0;
             }
 
-            for (int i = 0; i < genot[poz3].Length; i++)
+            for (int i = 0; i < otvet[poz3].Length; i++)
             {
-                listBox1.Items.Add(genot[poz3][i]);
+                listBox1.Items.Add(otvet[poz3][i]);
             }
             poz3 = poz3 + 1;
         }
 
 
 
-        private void f_otvetnaotvet()
+        private void perehod()
         {
-            genotnaot = otvetnaotvet;
-            textBox2.Text = textBox2.Text + '\r' + '\n' + "Выполнилась!";
 
         }
 
